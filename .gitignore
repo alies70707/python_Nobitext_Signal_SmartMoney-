@@ -1,0 +1,20 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.cpython-*
+
+# Test / coverage caches
+pytest_cache/
+.cache/
+
+# Logs (e.g. the monitoring output from --monitor runs)
+*.txt
+!requirements.txt
+
+# Environment
+.env
+.venv/
+venv/
+
+# OS / editor
+.DS_Store

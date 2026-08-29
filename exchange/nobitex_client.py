@@ -62,7 +62,9 @@ def to_udf_symbol(symbol: str) -> str:
         BTCIRT   -> BTCIRT
         btc-usdt -> BTCUSDT
     """
-    s = symbol.strip().upper().replace("-", "").replace("_", "")
+    # Underscores inside the base (e.g. "1k_shib-rls") must be preserved; only
+    # the dash between base and quote is dropped and RLS is mapped to IRT.
+    s = symbol.strip().upper().replace("-", "")
     return s.replace("RLS", "IRT")
 
 
@@ -73,7 +75,9 @@ def to_stats_key(symbol: str) -> str:
     # Quote currencies accepted by Nobitex, longest first so e.g. "usdt"
     # matches before "usd".
     known_quotes = ("usdt", "usdc", "busd", "tusd", "ust", "rls", "try", "eur")
-    s = symbol.strip().lower().replace("-", "").replace("_", "")
+    # Keep underscores inside the base (e.g. "1k_shib-rls"); only the dash
+    # between base and quote is removed before re-attaching the quote.
+    s = symbol.strip().lower().replace("-", "")
     s = s.replace("irt", "rls")  # stats quote is "rls", not "irt"
     for q in known_quotes:
         if s.endswith(q) and len(s) > len(q):
